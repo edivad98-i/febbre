@@ -49,9 +49,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             const ctx = document.getElementById('temperaturaGrafico').getContext('2d');
 
-            // Dati forniti
-            const labels = ['10:15', '15:00']; // Asse X: Tempo
-            const dataPoints = [37.7, 37.4]; // Asse Y: Temperatura
+            // Dati forniti aggiornati
+            const labels = ['10:15', '15:00', '19:15']; // Asse X: Tempo (aggiunto 19:15)
+            const dataPoints = [37.7, 37.4, 37.7]; // Asse Y: Temperatura (aggiunto 37.7)
 
             new Chart(ctx, {
                 type: 'line',
