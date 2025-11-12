@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davide come sta?</title>
+    <!-- Carica Tailwind CSS tramite CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carica Chart.js tramite CDN per il grafico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* Imposta il font Inter (default di Tailwind) */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Contenitore principale centrato -->
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="w-full max-w-xl bg-white p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-100 transition-all duration-300">
+
+            <!-- Intestazione con Titolo e Sottotitolo -->
+            <header class="text-center mb-8">
+                <h1 class="4xl font-extrabold text-indigo-700 tracking-tight mb-1">
+                    Davide come sta?
+                </h1>
+                <p class="text-sm font-medium text-gray-500 italic">
+                    Me lo hai mai chiesto?
+                </p>
+            </header>
+            
+            <!-- Area del Grafico -->
+            <div class="h-80 w-full mb-8 bg-gray-50 rounded-lg p-2 shadow-inner">
+                <canvas id="temperaturaGrafico"></canvas>
+            </div>
+
+            <!-- Informazioni sull'Aggiornamento -->
+            <footer class="text-right text-xs text-gray-400 border-t pt-4 mt-4">
+                ultimo aggiornamento ore 15:00
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+        // Logica JavaScript per creare il grafico
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('temperaturaGrafico').getContext('2d');
+
+            // Dati forniti aggiornati
+            const labels = ['10:15', '15:00', '19:15']; // Asse X: Tempo (aggiunto 19:15)
+            const dataPoints = [37.7, 37.4, 37.7]; // Asse Y: Temperatura (aggiunto 37.7)
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Temperatura corporea (°C)',
+                        data: dataPoints,
+                        // Stile della linea e dei punti
+                        borderColor: 'rgb(79, 70, 229)', // Colore Indaco
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        tension: 0.4, // Linea leggermente curva
+                        fill: true,
+                        pointBackgroundColor: 'rgb(167, 139, 250)', 
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Per usare l'altezza definita nel div (h-80)
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Variazione di Temperatura nel Tempo',
+                            font: { size: 16 }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            // Configurazione Asse X (Tempo)
+                            title: {
+                                display: true,
+                                text: 'Tempo',
+                                color: '#4b5563'
+                            },
+                            grid: { display: false }
+                        },
+                        y: {
+                            // Configurazione Asse Y (Temperatura)
+                            title: {
+                                display: true,
+                                text: 'Temperatura (°C)',
+                                color: '#4b5563'
+                            },
+                            // Scalatura ottimizzata per visualizzare la variazione
+                            min: 37.0, 
+                            max: 38.0, 
+                            ticks: {
+                                callback: function(value) {
+                                    return value + ' °C';
+                                }
+                            },
+                            border: { dash: [4, 4] }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
